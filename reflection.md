@@ -1,7 +1,7 @@
 # Reflection
 
-Student Name:  name
-Sudent Email:  email
+Student Name:  Gabrielle Russo
+Sudent Email:  grusso01@syr.edu
 
 ## Instructions
 
@@ -22,4 +22,6 @@ Examples:
 **Best Reflection** "I learned when to use while vs for loops. While loops are for sentiel-controlled values (waiting for a condition to occur), vs for loops are for iterating over collections of fixed values."
 
 `--- Reflection Below This Line ---`
+For this assignment, I refined my understanding of streamlit by using a somewhat real-world task of processing package information and data. Even though this wasn't my first experience with streamlit because we worked on it in class, this assignment helped me practice and solidify my skills using it, specifically dealing with text inputs, file uploads, and outputing in JSON. This assignment helped me understand the handling of uploaded files in streamlit by working with StringIO. I've used file handling in python before, but this assignment helped me connect that to web-based applications. Additionally, I learned that st.file_uploader() gives a file-like object, but needs to be decoded using .decode('utf-8'). I understand now that it allows for compatibility with non-ASCII characters.
 
+One question I do have is how this code can be optimized if a user inputs an extremely large file.
