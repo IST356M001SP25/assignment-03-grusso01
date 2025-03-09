@@ -21,16 +21,16 @@ def parse_packaging(packaging_data: str) -> list[dict]:
 
     package = []
     for data in packaging_data.split('/'):
-        item = data.split(" in ")[0]
-        quantity = int(item.split()[0])
-        item = item.split()[1].strip()
-        package.append({item: quantity})
-    
-    # get the last one
-    item = data.split(" in ")[-1]
-    quantity = int(item.split()[0])
-    item = item.split()[1].strip()
-    package.append({item: quantity})
+        item_data = data.split(" in ")
+        
+        quantity = int(item_data[0].split()[0])
+        unit = item_data[0].split()[1].strip()
+        package.append({unit: quantity})
+        
+        if len(item_data) > 1:
+            quantity = int(item_data[1].split()[0])
+            unit = item_data[1].split()[1].strip()
+            package.append({unit: quantity})
 
     return package
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     
     text = "25 balls in 1 bucket / 4 buckets in 1 bin"
     package = parse_packaging(text)
-    print(package)
+    print(f"Parsed package: {package}")
 
     package_total = calc_total_units(package)
     unit = get_unit(package)

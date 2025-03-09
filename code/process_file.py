@@ -9,23 +9,29 @@ import packaging
 from io import StringIO
 import json
 
-st.title('File Processing for Packages')
+st.title("Package File Processor")
 
-file = st.file_uploader('Upload package file: ')
+uploaded_file = st.file_uploader("Upload a package file:")
 
-if file:
-    filename = file.name
-    json_filename = filename.replace('.txt', '.json')
-    packages = []
-    text = StringIO(file.getvalue().decode('utf-8')).read()
-    for line in text.split('\n'):
-        line = line.strip()
-        pkg = packaging.parse_packaging(line)
-        total = packaging.calc_total_units(pkg)
-        unit = packaging.get_unit(pkg)
-        packages.append(pkg)
-        st.info(f'{line} ➡️ Total 📦 Size: {total} {unit}')
-    count = len(packages)
-    with open(f'./data/{json_filename}', 'w') as f:
-        json.dump(packages, f, indent=4)
-    st.success(f'{count} packages written to {json_filename}', icon='💾')
+if uploaded_file:
+    out_filename = uploaded_file.name.replace(".txt", ".json")
+    package_list = []
+    
+    text = StringIO(uploaded_file.getvalue().decode("utf-8")).read()
+    
+    for package_line in text.split("\n"):
+        if not package_line.strip():
+            continue
+            
+        package_data = packaging.parse_packaging(package_line.strip())
+        package_size = packaging.calc_total_units(package_data)
+        unit_type = packaging.get_unit(package_data)
+        
+        package_list.append(package_data)
+        st.info(f"{package_line.strip()} ➡️ Total 📦 Size: {package_size} {unit_type}")
+    
+    if package_list:
+        with open(f"./data/{out_filename}", "w") as output_file:
+            json.dump(package_list, output_file, indent=4)
+        
+        st.success(f"{len(package_list)} packages written to {out_filename}", icon="💾")
